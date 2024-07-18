@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from scipy.stats import norm
 import matplotlib.pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
 import streamlit as st
 import seaborn as sns
 import streamlit.components.v1 as components
@@ -271,16 +272,16 @@ bcol3.metric("Theta", str(round(theta(S, K, r, T, sigma,type=1), 3)))
 bcol4.metric("Vega", str(round(vega(S, K, r, T, sigma), 3)))
 bcol5.metric("Rho", str(round(rho(S, K, r, T, sigma,type=1), 3)))
 
+
 # Create a heatmap plot
 def create_heatmap(data, type):
     fig, ax = plt.subplots()
-    sns.heatmap(data, annot=True, cmap="YlGnBu", fmt=".2f", xticklabels=heatmap_volatilities, yticklabels=heatmap_spot_prices, annot_kws={"size": 8}, ax=ax)
+    sns.heatmap(data, annot=True, cmap=LinearSegmentedColormap.from_list('RedGreen', ['red', 'yellow', 'green']), fmt=".2f", xticklabels=heatmap_volatilities, yticklabels=heatmap_spot_prices, annot_kws={"size": 8}, ax=ax)
     ax.set_xlabel('Volatility (σ)', fontsize=10)
     ax.set_ylabel('Spot Price ($)', fontsize=10)
     if type: ax.set_title("Call Heatmap", fontsize=11)
     else: ax.set_title("Put Heatmap", fontsize=11)
     return fig
-
 
 st.title("Call Heatmap")
 
